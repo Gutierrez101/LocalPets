@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ingresar Tabla</title>
+</head>
+<body>
+    <h1>Datos en la Tabla1</h1>
+    
+        {% csrf_token %}
+        {% for elem in tablas %}
+            <a href= {%url 'verTabla1Unica' elem.id%} >{{ elem.id }}</a> 
+        {% endfor %}
+   
+        
+</body>
+</html>
