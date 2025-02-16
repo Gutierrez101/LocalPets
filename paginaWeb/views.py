@@ -41,9 +41,6 @@ def verTabla1Unica(request, id):
 #def crear_mascota():
 
 
-
-
-
 def obtener_detalles(request, pk):
     mascota = get_object_or_404(Mascota, pk=pk)
     detalles=mascota.obtenerDetalles()
