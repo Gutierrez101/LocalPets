@@ -26,8 +26,8 @@ class Mascota(models.Model):
     descripcion=models.TextField(blank=True,null=True)
     estado=models.CharField(max_length=50,choices=[('Perdido','Perdido'),('Adoptado','Adoptado'),('Disponible','Disponible')])
     fotografia=models.ImageField(upload_to='mascotas/',blank=True,null=True)
-    latitud=models.DecimalField(blank=True,null=True)
-    longitud=models.TextField(blank=True,null=True)
+    latitud=models.DecimalField(max_digits=9,decimal_places=6,blank=True,null=True)
+    longitud=models.DecimalField(max_digits=9,decimal_places=6,blank=True,null=True)
     direccion=models.CharField(max_length=255,blank=True,null=True)
 
     def __str__(self):
