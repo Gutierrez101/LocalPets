@@ -16,4 +16,4 @@ urlpatterns = [
     path('mascota/<int:pk>/ubicacion/', obtener_ubicacion, name='obtener_ubicacion'),
     path('mascota/<int:pk>/ubicacion/actualizar/', actualizar_ubicacion, name='actualizar_ubicacion'),
     
-]#poner url para comprobar metodos
+]
