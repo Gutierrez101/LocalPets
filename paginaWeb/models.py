@@ -16,7 +16,7 @@ class tablaVinculada(models.Model):
     tablaPrueva = models.ForeignKey(tablaPrueva, on_delete=models.CASCADE)
     def __str__(self):
         return self.nombre
-#Modelo de mascots  
+#Modelo de mascotas  
 class Mascota(models.Model):
     id=models.AutoField(primary_key=True)
     especie=models.CharField(max_length=50)
