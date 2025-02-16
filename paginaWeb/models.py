@@ -75,7 +75,7 @@ class Mascota(models.Model):
 #Modelo de Publicacion
 class Publicacion(models.Model):
     id=models.AutoField(primary_key=True)
-    usuario=models.ForeignKey(User,on_delete=models.CASCADE)
+    usuario=models.ForeignKey('Usuario',on_delete=models.CASCADE)
     mascota=models.ForeignKey('Mascota',on_delete=models.CASCADE)
     fecha_publicacion=models.DateTimeField(auto_now_add=True)
     comentarios=models.TextField(blank=True,null=True)
