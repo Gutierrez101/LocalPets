@@ -99,3 +99,7 @@ class Publicacion(models.Model):
         self.delete()
         return f"Publicacion eliminada con exito"
     
+    def agregarComentarios(self,nuevo_comentario):
+        self.comentarios+=f"\n{nuevo_comentario}"
+        self.save()
+        return "Comentario agregado correctamente"
