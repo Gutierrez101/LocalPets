@@ -103,3 +103,44 @@ class Publicacion(models.Model):
         self.comentarios+=f"\n{nuevo_comentario}"
         self.save()
         return "Comentario agregado correctamente"
+    
+# Clase Usuario
+class Usuario(models.Model):
+    id = models.AutoField(primary_key=True)
+    # Nombre del usuario (máximo 50 caracteres)
+    nombre = models.CharField(max_length=50)    
+    email = models.EmailField(unique=True)
+    # Contraseña del usuario (en una aplicación real debería encriptarse)
+    contraseña = models.CharField(max_length=128)
+    telefono = models.CharField(max_length=20, blank=True, null=True)
+    
+    def __str__(self):
+        # Devuelve el nombre del usuario como objeto
+        return self.nombre
+
+    # Guarda el usuario en     
+    def registrar(self):
+        self.save()
+        return f"Usuario {self.nombre} registrado con éxito."
+    
+    def iniciarSesion(self, email, password):
+        # Verifica el email y la contraseña para iniciar sesión
+        if self.email == email and self.contraseña == password:
+            return f"Sesión iniciada para {self.nombre}."
+        return "Credenciales inválidas."
+    
+    def cerrarSesion(self):
+        # Simula el cierre de sesión del usuario
+        return f"Sesión cerrada para {self.nombre}."
+    
+    def actualizarPerfil(self, **kwargs):
+        # Actualiza los datos del usuario con los valores proporcionados
+        for key, value in kwargs.items():
+            if hasattr(self, key):
+                setattr(self, key, value)
+        self.save()
+        return f"Perfil de {self.nombre} actualizado con éxito."
+    
+    def autenticacion(self, email, password):
+        # Verifica si el email y la contraseña coinciden con los del usuario
+        return self.email == email and self.contraseña == password
