@@ -1,7 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404
-from django.http import JsonResponse
 from .forms import tablaPruevaForm, tablaVinculadaForm
 from .models import tablaPrueva
 from .models import Mascota
