@@ -36,30 +36,38 @@ def verTabla1s(request):
 def verTabla1Unica(request, id):
     return render(request, "verTablaUnica.html", {"tabla": tablaPrueva.objects.get(id=id).__dict__.items})
 
+#Nuevos vistas 
+
+#def crear_mascota():
+
+
+
 
 
 def obtener_detalles(request, pk):
     mascota = get_object_or_404(Mascota, pk=pk)
-    return JsonResponse(mascota.obtenerDetalles())
+    detalles=mascota.obtenerDetalles()
+    return render(request,"detalles_mascota.html",{"mascota":detalles})
 
 def actualizar_mascota(request, pk):
     mascota = get_object_or_404(Mascota, pk=pk)
     if request.method == "POST":
         data = request.POST
         mascota.actualizarMascota(**data.dict())  # Convierte QueryDict en diccionario
-        return JsonResponse({"mensaje": "Mascota actualizada correctamente"})
-    return JsonResponse({"error": "Método no permitido"}, status=405)
+        return render(request,"actualizar_mascota.html",{"mascota":mascota,"mensaje":"Mascota actualizada correctamente"})
+    return render(request,"actualizar_mascota.html",{"mascota":mascota})
 
 def obtener_ubicacion(request, pk):
     mascota = get_object_or_404(Mascota, pk=pk)
-    return JsonResponse({"ubicacion": mascota.obtenerUbicacion()})
+    return render(request,"ubicacion_mascota.html",{"ubicacion":mascota.obtenerUbicacion()})
 
 def actualizar_ubicacion(request, pk):
     mascota = get_object_or_404(Mascota, pk=pk)
     if request.method == "POST":
         nueva_direccion = request.POST.get("direccion")
         if nueva_direccion:
-            mascota.actualizarUbicacion(nueva_direccion)
-            return JsonResponse({"mensaje": "Ubicación actualizada correctamente"})
-        return JsonResponse({"error": "Falta la nueva dirección"}, status=400)
-    return JsonResponse({"error": "Método no permitido"}, status=405)
+            mensaje=mascota.actualizarUbicacion(nueva_direccion)
+            return render(request,"actualizar_ubicacion.html",{"mascota":mascota,"mensaje":mensaje})
+        else:
+            return render(request,"actualizar_ubicacion.html",{"mascota":mascota,"error":"Falta la nueva direccion"})
+    return render(request,"actualizar_ubicacion.html",{"mascota":mascota})

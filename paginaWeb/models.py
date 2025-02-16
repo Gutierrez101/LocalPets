@@ -26,10 +26,13 @@ class Mascota(models.Model):
     descripcion=models.TextField(blank=True,null=True)
     estado=models.CharField(max_length=50,choices=[('Perdido','Perdido'),('Adoptado','Adoptado'),('Disponible','Disponible')])
     fotografia=models.ImageField(upload_to='mascotas/',blank=True,null=True)
+    latitud=models.DecimalField(max_digits=9,decimal_places=6,blank=True,null=True)
+    longitud=models.TextField(max_digits=9,decimal_places=6,blank=True,null=True)
     direccion=models.CharField(max_length=255,blank=True,null=True)
 
     def __str__(self):
-        return f"{self.especie} - {self.raza if self.raza else 'sin raza'} ({self.estado})"
+        return f"{self.id}: {self.especie} - {self.raza if self.raza else 'Sin raza'} ({self.estado}) - {self.direccion if self.direccion else 'Sin dirección'}"
+
     
     def registrarMascota(self):
         self.save()
@@ -40,11 +43,11 @@ class Mascota(models.Model):
         return f"Mascota {self.especie}-{self.raza} eleiminada con exito."
     
     def actualizarMascota(self,**kwargs):
-        for key, value in kwargs.item():
+        for key, value in kwargs.items():
             if hasattr(self,key):
                 setattr(self,key,value)
         self.save()
-        return f"Mascota {self.especie}-{self.raza} actualizada correctamente"
+        return f"Mascota {self.especie}-{self.raza if self.raza else 'Sin raza'} actualizada correctamente"
     
     def obtenerDetalles(self):
         return{
@@ -55,7 +58,7 @@ class Mascota(models.Model):
             "Tamaño":self.tamaño,
             "Descripcion":self.descripcion,
             "Estado":self.estado,
-            "Fotografia": self.fotografia.url if self.fotografia else "No disponible",
+            "Fotografia": getattr(self.fotografia,'url',"No disponible"),
             "Direccion": self.direccion if self.direccion else "No especificada"
         }
     
@@ -96,7 +99,3 @@ class Publicacion(models.Model):
         self.delete()
         return f"Publicacion eliminada con exito"
     
-    def agregarComentarios(self,nuevo_comentario):
-        self.comentarios+=f"\n{nuevo_comentario}"
-        self.save()
-        return "Comentario agregado correctamente"
