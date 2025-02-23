@@ -1,7 +1,7 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.shortcuts import get_object_or_404
-from .forms import tablaPruevaForm, tablaVinculadaForm
+from .forms import tablaPruevaForm, tablaVinculadaForm, MascotaForm
 from .models import tablaPrueva
 from .models import Mascota
 
@@ -46,6 +46,17 @@ def verTabla1Unica(request, id):
 #Nuevos vistas 
 
 #def crear_mascota():
+
+def registro_mascota(request):
+    if request.method == 'POST':
+        form = MascotaForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('index')  # Redirige a la página de inicio después de guardar
+    else:
+        form = MascotaForm()
+    return render(request, 'registro_mascota.html', {'form': form})
+
 
 
 def obtener_detalles(request, pk):
