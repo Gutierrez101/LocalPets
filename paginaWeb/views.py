@@ -1,6 +1,9 @@
 from django.http import HttpResponse
 from django.shortcuts import render,redirect
 from django.shortcuts import get_object_or_404
+from django.contrib.auth import authenticate, login
+from django.contrib import messages
+from django.contrib.auth.forms import UserCreationForm
 from .forms import tablaPruevaForm, tablaVinculadaForm, MascotaForm
 from .models import tablaPrueva
 from .models import Mascota
@@ -13,10 +16,27 @@ def index(request):
     return render(request, 'index.html')
 
 def login_view(request):
+    if request.method == 'POST':
+        username = request.POST['usuario']
+        password = request.POST['contraseña']
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('index')
+        else:
+            messages.error(request, 'Usuario o contraseña incorrectos')
     return render(request, 'Login.html')
 
 def new_user_view(request):
-    return render(request, 'newUser.html')
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, '¡Registro exitoso! Ahora puedes iniciar sesión.')
+            return redirect('login')
+    else:
+        form = UserCreationForm()
+    return render(request, 'newUser.html', {'form': form})
 
 def ingresarTabla1(request):
     if request.method == "POST":
