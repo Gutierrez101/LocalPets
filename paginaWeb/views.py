@@ -55,7 +55,7 @@ def registro_mascota(request):
             return redirect('index')  # Redirige a la página de inicio después de guardar
     else:
         form = MascotaForm()
-    return render(request, 'registro_mascota.html', {'form': form})
+    return render(request, 'registro-mascota-perdida.html', {'form': form})
 
 
 

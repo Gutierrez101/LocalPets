@@ -5,5 +5,5 @@ function ingresar() {
 
 function registrar() {
     alert('Redirigiendo a la página de registro de mascotas...');
-    window.location.href = '/registro_mascota/';
+    window.location.href = '/registro_mascota_perdida/';
 }
