@@ -6,9 +6,17 @@ from .models import tablaPrueva
 from .models import Mascota
 
 # Create your views here.
-def index(request):
-    return HttpResponse("Hello, world. You're at the polls index.")
+#def index(request):
+    #return HttpResponse("Hello, world. You're at the polls index.")
 
+def index(request):
+    return render(request, 'index.html')
+
+def login_view(request):
+    return render(request, 'Login.html')
+
+def new_user_view(request):
+    return render(request, 'newUser.html')
 
 def ingresarTabla1(request):
     if request.method == "POST":

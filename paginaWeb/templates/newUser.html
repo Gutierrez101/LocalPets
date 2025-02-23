@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro - LocalPet</title>
+    <link rel="stylesheet" href="newUser.css">
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+    <header>
+        <div class="logo"><img src="perro busqueda.webp" alt="perro"> LOCALPET </div>
+        <nav>
+            <a href="#">Inicio</a>
+            <a href="#">Ayuda</a>
+        </nav>
+    </header>
+    
+    <main>
+        <h1 class="titulo">Registro Nuevo Usuario</h1>
+        <form class="registro-form" onsubmit="return showModal(event)">
+            <label for="nombre"><b>Nombre:</b></label>
+            <input type="text" id="nombre" name="nombre" placeholder="Ingresa tu nombre" required>
+            
+            <label for="telefono"><b>Teléfono:</b></label>
+            <input type="tel" id="telefono" name="telefono" placeholder="Ingresa tu teléfono" pattern="[0-9]*" required onkeypress="return isNumberKey(event)">
+            
+            <label for="correo"><b>Correo electrónico:</b></label>
+            <input type="email" id="correo" name="correo" placeholder="Ingresa tu correo" required>
+            
+            <label for="contrasena"><b>Contraseña:</b></label>
+            <input type="password" id="contrasena" name="contrasena" placeholder="Ingresa tu contraseña" required>
+            
+            <button class="Registrar" type="submit">Registrar</button>
+        </form>
+    </main>
+    <div class="modal-container" id="modal-container">
+        <div class="modal">
+            <h2>¡Registro exitoso!</h2>
+            <p>¡Bienvenido a LocalPet! Ahora puedes iniciar sesión con tu correo y contraseña.</p>
+            <button onclick="window.location.href='login.html'">Iniciar sesión</button>
+        </div>
+    </div>
+
+    <script>
+        function isNumberKey(evt) {
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                return false;
+            }
+            return true;
+        }
+
+        function showModal(event) {
+            event.preventDefault();
+            document.getElementById('modal-container').classList.add('show');
+            return false;
+        }
+    </script>
+</body>
+</html>
