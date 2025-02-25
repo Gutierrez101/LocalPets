@@ -7,13 +7,12 @@
 </head>
 <div class="salir">
     <button onclick="window.location.href='{% url 'index' %}'">Regresar</button>
-
 </div>
 <body>
     <div class="container">
         <div class="left-side">
             <div class="logo-container">
-                <img src="{% static 'paginaweb/pngegg.png' %}" alt="">
+                <img src="{% static 'paginaweb/pngegg.png' %}" alt=""><!--cmabiar forma de enlace-->
                 <span class="logo-text"><b>LocalPet</b></span>
                 <br><br>
                 
@@ -38,7 +37,7 @@
                 <button type="submit" class="btn">Ingresar</button>
                 <div class="form-group">
                     <br>
-                    <a href="{% url 'new_user' %}">Crear cuenta</a>
+                    <a href="{% url 'new_user' %}">Crear cuenta</a><!--Cambiar forma de enlace-->
                 </div>
             </form>
         </div>

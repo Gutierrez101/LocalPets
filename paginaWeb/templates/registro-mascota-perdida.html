@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +11,7 @@
     <header>
         <div class="container-start">
             <div class="container-start-combo1">
-                <div class="container-start-logo"><img src="/LocalPets/paginaWeb/static/paginaweb/perro.png" alt="Logo"></div>
+                <div class="container-start-logo"><img src="{% static 'paginaweb/perro.png' %}" alt="Logo"></div><!--Forma de enlace de django-->
                 <div class="container-start-title"><h1>LOCALPET</h1></div>
             </div>
             <div class="container-start-combo2">  
@@ -18,7 +19,7 @@
                     <button class="container-start-buttons-login" onclick="window.location.href='index.html'">Inicio</button>
                     <button class="container-start-buttons-help" onclick="window.location.href='index.html'">Ayuda</button>
                 </div>
-                <div class="container-start-logo2"><img src="/LocalPets/paginaWeb/static/paginaweb/huella.png" alt="Huella"></div>
+                <div class="container-start-logo2"><img src="{% static 'paginaweb/huella.png' %}" alt="Huella"></div><!--Forma d eenlace de django-->
             </div>  
         </div>
     </header>
