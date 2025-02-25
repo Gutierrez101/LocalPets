@@ -77,6 +77,20 @@ def registro_mascota(request):
         form = MascotaForm()
     return render(request, 'registro-mascota-perdida.html', {'form': form})
 
+def buscar_mascota(request):
+    mensaje = None  # Variable para mensaje opcional
+    if request.method == 'POST':
+        form = MascotaForm(request.POST)
+        if form.is_valid():
+            form.save()
+            mensaje = "Mascota guardada exitosamente."
+            form = MascotaForm()  # Reiniciamos el formulario, por ejemplo, para dejarlo vacío
+    else:
+        form = MascotaForm()
+    return render(request, 'buscar-mascota-perdida.html', {'form': form, 'mensaje': mensaje})
+
+
+
 
 
 def obtener_detalles(request, pk):
