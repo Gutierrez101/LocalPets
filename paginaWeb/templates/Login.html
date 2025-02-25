@@ -3,16 +3,17 @@
 <html>
 <head>
     <title>LocalPet</title>
-    <link rel="stylesheet" href="{% static 'paginaweb/Login.css' %}">
+    <link rel="stylesheet" href="{% static 'paginaweb/Login.css'%}">
 </head>
 <div class="salir">
     <button onclick="window.location.href='{% url 'index' %}'">Regresar</button>
+
 </div>
 <body>
     <div class="container">
         <div class="left-side">
             <div class="logo-container">
-                <img src="{% static 'paginaweb/pngegg.png' %}" alt=""><!--cmabiar forma de enlace-->
+                <img src="{% static 'paginaweb/pngegg.png'%}" alt="">
                 <span class="logo-text"><b>LocalPet</b></span>
                 <br><br>
                 
@@ -24,20 +25,17 @@
             <form>
                 <div class="form-group">
                     <label for="usuario" >Usuario:</label>
-                    <input type="text" id="usuario" name="usuario" required >
+                    <input type="text" id="usuario" name="usuario" placeholder="Ingrese su usuario" required >
                 </div>
                 <div class="form-group">
                     <label for="contraseña" >Contraseña:</label>
-                    <input type="password" id="contraseña" name="contraseña" required >
+                    <input type="password" id="contraseña" name="contraseña" placeholder="Ingrese su contraseña" required >
                 </div>
-                <div class="form-group">
-                    <a href="#" class="forgot-password">¿Olvidaste tu contraseña?</a>
-                    <br>
-                </div>
+                
                 <button type="submit" class="btn">Ingresar</button>
                 <div class="form-group">
                     <br>
-                    <a href="{% url 'new_user' %}">Crear cuenta</a><!--Cambiar forma de enlace-->
+                    <a href="{% url 'new_user' %}">Crear cuenta</a>
                 </div>
             </form>
         </div>
