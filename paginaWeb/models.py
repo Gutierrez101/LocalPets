@@ -105,42 +105,43 @@ class Publicacion(models.Model):
         return "Comentario agregado correctamente"
     
 # Clase Usuario
+
 class Usuario(models.Model):
     id = models.AutoField(primary_key=True)
-    # Nombre del usuario (máximo 50 caracteres)
     nombre = models.CharField(max_length=50)    
-    email = models.EmailField(unique=True)
-    # Contraseña del usuario (en una aplicación real debería encriptarse)
-    contraseña = models.CharField(max_length=128)
-    telefono = models.CharField(max_length=20, blank=True, null=True)
-    
-    def __str__(self):
-        # Devuelve el nombre del usuario como objeto
-        return self.nombre
+    email = models.EmailField(unique=True)  # Correo único
+    contraseña = models.CharField(max_length=128)  # Contraseña encriptada
+    telefono = models.CharField(max_length=20, blank=True, null=True)  # Teléfono opcional
+    is_active = models.BooleanField(default=True)  # Usuario activo
+    is_staff = models.BooleanField(default=False)  # Administrador
 
-    # Guarda el usuario en     
+    def __str__(self):
+        return self.nombre  # Devuelve el nombre del usuario
+
     def registrar(self):
-        self.save()
+        """Registra un nuevo usuario y encripta la contraseña."""
+        self.contraseña = make_password(self.contraseña)  # Encripta la contraseña
+        self.save()  # Guarda en la base de datos
         return f"Usuario {self.nombre} registrado con éxito."
     
     def iniciarSesion(self, email, password):
-        # Verifica el email y la contraseña para iniciar sesión
-        if self.email == email and self.contraseña == password:
+        """Inicia sesión verificando el email y la contraseña."""
+        if self.email == email and check_password(password, self.contraseña):
             return f"Sesión iniciada para {self.nombre}."
         return "Credenciales inválidas."
     
     def cerrarSesion(self):
-        # Simula el cierre de sesión del usuario
+        """Simula el cierre de sesión."""
         return f"Sesión cerrada para {self.nombre}."
     
     def actualizarPerfil(self, **kwargs):
-        # Actualiza los datos del usuario con los valores proporcionados
+        """Actualiza los atributos del perfil del usuario."""
         for key, value in kwargs.items():
-            if hasattr(self, key):
-                setattr(self, key, value)
-        self.save()
+            if hasattr(self, key):  # Verifica si el atributo existe
+                setattr(self, key, value)  # Actualiza el atributo
+        self.save()  # Guarda los cambios
         return f"Perfil de {self.nombre} actualizado con éxito."
     
     def autenticacion(self, email, password):
-        # Verifica si el email y la contraseña coinciden con los del usuario
-        return self.email == email and self.contraseña == password
+        """Verifica si el email y la contraseña son correctos."""
+        return self.email == email and check_password(password, self.contraseña)

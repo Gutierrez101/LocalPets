@@ -3,178 +3,121 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBDaeWicvigtP9xPv919E-RNoxfvC-Hqik&callback=iniciarMap" async></script>
     <title>Registro</title>
 </head>
 <body>
     <header>
         <div class="container-start">
             <div class="container-start-combo1">
-                <div class="container-start-logo"><img src="/perro.png" alt="Logo"></div>
+                <div class="container-start-logo"><img src="/LocalPets/paginaWeb/static/paginaweb/perro.png" alt="Logo"></div>
                 <div class="container-start-title"><h1>LOCALPET</h1></div>
             </div>
             <div class="container-start-combo2">  
                 <div class="container-start-buttons">
-                    <button class="container-start-buttons-login" onclick="window.location.href='login.html'">Inicio</button>
-                    <button class="container-start-buttons-help" onclick="window.location.href='login.html'">Ayuda</button>
+                    <button class="container-start-buttons-login" onclick="window.location.href='index.html'">Inicio</button>
+                    <button class="container-start-buttons-help" onclick="window.location.href='index.html'">Ayuda</button>
                 </div>
-                <div class="container-start-logo2"><img src="/huella.png" alt="Huella"></div>
+                <div class="container-start-logo2"><img src="/LocalPets/paginaWeb/static/paginaweb/huella.png" alt="Huella"></div>
             </div>  
         </div>
     </header>
     <main>
         <div class="container-form">
             <form action="/MIO/registro-mascota-perdida.php" method="POST" enctype="multipart/form-data">
-            <label for="tipo-raza">Raza:</label>
-            <select name="tipo-raza" id="tipo-raza" required>
-            <option value="" disabled selected></option>
-            <option value="perro">Perro</option>
-            <option value="gato">Gato</option>
-            <option value="otro">Otro</option>
-            </select>
-            <label for="color">Color:</label>
-            <input type="text" name="color" id="color" placeholder="Escribe el color" required pattern="[A-Za-z\s]+">
-            <label for="genero">Género:</label>
-            <select name="genero" id="genero" required>
-            <option value="" disabled selected></option>
-            <option value="macho">Macho</option>
-            <option value="hembra">Hembra</option>
-            </select>
-            <label for="tamano">Tamaño (cm):</label>
-            <input type="number" name="tamano" id="tamano" placeholder="Escribe el tamaño" required min="1">
-            <label for="ubicacion">Ubicación:</label>
-            <input type="text" name="ubicacion" id="ubicacion" placeholder="Escribe la ubicación" required>
-            <label for="fecha">Fecha que fue encontrado:</label>
-            <input type="date" name="fecha" id="fecha" required>
-            <label for="media">Subir Foto:</label>
-            <input type="file" name="media" id="media" accept="image/*" required onchange="previewFile()">
-            <div id="preview"></div>
-            <label for="descripcion">Descripción:</label>
-            <textarea name="descripcion" id="descripcion" cols="30" rows="10" placeholder="Escribe la descripción" required></textarea>
-            <label for="contacto">Información de Contacto:</label>
-            <input type="text" name="contacto" id="contacto" placeholder="Escribe la información de contacto" required>
-            <button type="submit">Guardar Reporte</button>
+                <label for="tipo-raza">Raza:</label>
+                <select name="tipo-raza" id="tipo-raza" required>
+                    <option value="" disabled selected></option>
+                    <option value="perro">Perro</option>
+                    <option value="gato">Gato</option>
+                    <option value="otro">Otro</option>
+                </select>
+                <label for="color">Color:</label>
+                <input type="text" name="color" id="color" placeholder="Escribe el color" required pattern="[A-Za-z\s]+">
+                <label for="genero">Género:</label>
+                <select name="genero" id="genero" required>
+                    <option value="" disabled selected></option>
+                    <option value="macho">Macho</option>
+                    <option value="hembra">Hembra</option>
+                </select>
+                <label for="tamano">Tamaño (cm):</label>
+                <input type="number" name="tamano" id="tamano" placeholder="Escribe el tamaño" required min="1">
+                <label for="ubicacion">Ubicación:</label>
+                    <label for="latitud">Latitud:</label>
+                    <input type="text" name="latitud" id="latitud" placeholder="Latitud" required readonly>
+                    <label for="longitud">Longitud:</label>
+                    <input type="text" name="longitud" id="longitud" placeholder="Longitud" required readonly>
+                <div id="map" style="z-index: 1000; position: relative; height: 500px; width: 100%;"></div>
+                <script>
+function iniciarMap() {
+            let defaultLocation = { lat: 19.432608, lng: -99.133209 }; // 📍 Ubicación predeterminada (Ciudad de México)
+
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    function (position) {
+                        let userLocation = {
+                            lat: position.coords.latitude,
+                            lng: position.coords.longitude
+                        };
+                        cargarMapa(userLocation);
+                    },
+                    function () {
+                        alert("No se pudo obtener la ubicación. Se usará una ubicación predeterminada.");
+                        cargarMapa(defaultLocation);
+                    }
+                );
+            } else {
+                alert("Tu navegador no soporta la geolocalización. Se usará una ubicación predeterminada.");
+                cargarMapa(defaultLocation);
+            }
+        }
+
+        function cargarMapa(coordenadas) {
+            let map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 15,
+                center: coordenadas
+            });
+
+            let marker = new google.maps.Marker({
+                position: coordenadas,
+                map: map,
+                draggable: true
+            });
+
+            // Mostrar las coordenadas en los campos del formulario
+            document.getElementById('latitud').value = coordenadas.lat;
+            document.getElementById('longitud').value = coordenadas.lng;
+
+            // Actualizar coordenadas si se mueve el marcador
+            google.maps.event.addListener(marker, 'dragend', function (event) {
+                document.getElementById('latitud').value = event.latLng.lat();
+                document.getElementById('longitud').value = event.latLng.lng();
+            });
+        }
+                </script>
+                <label for="fecha">Fecha que fue encontrado:</label>
+                <input type="date" name="fecha" id="fecha" required>
+                <label for="media">Subir Foto:</label>
+                <input type="file" name="media" id="media" accept="image/*" required onchange="previewFile()">
+                <div id="preview"></div>
+                <label for="descripcion">Descripción:</label>
+                <textarea name="descripcion" id="descripcion" cols="30" rows="10" placeholder="Escribe la descripción" required></textarea>
+                <label for="contacto">Información de Contacto:</label>
+                <input type="text" name="contacto" id="contacto" placeholder="Escribe la información de contacto" required>
+                <button type="submit" onclick="guardarReporte()">Guardar Reporte</button>
             </form>
         </div>
     </main>
 </body>
 </html>
 
-<script>
-const inputTipoRaza = document.getElementById('tipo-raza');
-inputTipoRaza.addEventListener('invalid', function(event) {
-    if (event.target.validity.valueMissing) {
-        event.target.setCustomValidity('Selecciona una opción');
-    }
-});
-
-const inputColor = document.getElementById('color');
-inputColor.addEventListener('invalid', function(event) {
-    if (event.target.validity.valueMissing) {
-        event.target.setCustomValidity('Escribe el color');
-    } else if (event.target.validity.patternMismatch) {
-        event.target.setCustomValidity('Solo se permiten letras y espacios');
-    }
-});
-
-const inputGenero = document.getElementById('genero');
-inputGenero.addEventListener('invalid', function(event) {
-    if (event.target.validity.valueMissing) {
-        event.target.setCustomValidity('Selecciona una opción');
-    }
-});
-
-const inputTamano = document.getElementById('tamano');
-inputTamano.addEventListener('invalid', function(event) {
-    if (event.target.validity.valueMissing) {
-        event.target.setCustomValidity('Por favor, ingresa el tamaño.');
-    } else if (event.target.validity.patternMismatch) {
-        event.target.setCustomValidity('Solo se permiten números.');
-    }
-});
-
-const inputUbicacion = document.getElementById('ubicacion');
-inputUbicacion.addEventListener('invalid', function(event) {
-    if (event.target.validity.valueMissing) {
-        event.target.setCustomValidity('Escribe la ubicación');
-    }
-}); 
-
-const inputFecha = document.getElementById('fecha');
-inputFecha.addEventListener('invalid', function(event) {
-    if (event.target.validity.valueMissing) {
-        event.target.setCustomValidity('Selecciona una fecha');
-    }
-});
-
-const inputMedia = document.getElementById('media');
-inputMedia.addEventListener('invalid', function(event) {
-    if (event.target.validity.valueMissing) {
-        event.target.setCustomValidity('Sube una foto o video');
-    }
-});
-
-const inputDescripcion = document.getElementById('descripcion');
-inputDescripcion.addEventListener('invalid', function(event) {
-    if (event.target.validity.valueMissing) {
-        event.target.setCustomValidity('Escribe la descripción');
-    }
-}); 
-
-const inputContacto = document.getElementById('contacto');
-inputContacto.addEventListener('invalid', function(event) {
-    if (event.target.validity.valueMissing) {
-        event.target.setCustomValidity('Escribe la información de contacto');
-    }
-});
-
-document.addEventListener('DOMContentLoaded', function() {
-    const inputs = [
-        { id: 'tipo-raza', message: 'Por favor, selecciona una raza.' },
-        { id: 'color', message: 'Por favor, ingresa un color.', patternMessage: 'Solo se permiten letras y espacios.' },
-        { id: 'genero', message: 'Por favor, selecciona un género.' },
-        { id: 'tamano', message: 'Por favor, ingresa el tamaño.', patternMessage: 'Solo se permiten números.' },
-        { id: 'ubicacion', message: 'Por favor, ingresa la ubicación.' },
-        { id: 'fecha', message: 'Por favor, ingresa la fecha.' },
-        { id: 'media', message: 'Sube una foto o video.' },
-        { id: 'descripcion', message: 'Escribe la descripción.' },
-        { id: 'contacto', message: 'Escribe la información de contacto.' }
-    ];
-
-    inputs.forEach(input => {
-        const element = document.getElementById(input.id);
-        element.addEventListener('input', function(event) {
-            event.target.setCustomValidity('');
-        });
-        element.addEventListener('invalid', function(event) {
-            if (event.target.validity.valueMissing) {
-                event.target.setCustomValidity(input.message);
-            } else if (event.target.validity.patternMismatch && input.patternMessage) {
-                event.target.setCustomValidity(input.patternMessage);
-            } else {
-                event.target.setCustomValidity('');
-            }
-        });
-    });
-});
-
-
-function previewFile() {
-    const preview = document.getElementById('preview');
-    const file = document.getElementById('media').files[0];
-    const reader = new FileReader();
-
-    reader.addEventListener("load", function () {
-        preview.innerHTML = `<img src="${reader.result}" alt="Vista previa" style="max-width: 100%; height: auto;">`;
-    }, false);
-
-    if (file) {
-        reader.readAsDataURL(file);
-    }
-}
-</script>
-
 <style>
-    body {
+#map {
+    height: 500px;
+    width: 500px;
+}
+
+body {
     font-family: Arial, sans-serif;
     background-color: #e2caa5;
 }
@@ -204,7 +147,6 @@ function previewFile() {
     height: 100px;
 }
 
-
 h1 {
     margin: 0;
     font-size: 55px;
@@ -231,7 +173,6 @@ h1 {
     border: none;
     cursor: pointer;
     font-size: 15px;
-
 }
 
 .container-start-buttons button:hover {
@@ -249,8 +190,6 @@ h1 {
     height: 70px;
 }
 
-
-
 /*Esto modifica el main*/
 main {
     display: flex;
@@ -259,8 +198,6 @@ main {
     height: 100vh;
     margin-top: 200px; 
 }
-
-
 
 form {
     display: flex;
@@ -294,7 +231,6 @@ form button {
     cursor: pointer;
 }
 
-
 form button {
     width: 200px;
     text-align: center;
@@ -324,27 +260,27 @@ form button:hover {
 }
 
 .container-form {
-    margin-top: 400px;
+    margin-top: 1000px;
 }
 </style>
 
 <script>
 function previewFile() {
-const preview = document.getElementById('preview');
-const file = document.getElementById('media').files[0];
-const reader = new FileReader();
+    const preview = document.getElementById('preview');
+    const file = document.getElementById('media').files[0];
+    const reader = new FileReader();
 
-reader.addEventListener("load", function () {
-    const mediaType = file.type.split('/')[0];
-    if (mediaType === 'image') {
-        preview.innerHTML = `<img src="${reader.result}" alt="Vista previa" style="max-width: 100%; height: auto;">`;
-    } else if (mediaType === 'video') {
-        preview.innerHTML = `<video controls style="max-width: 100%; height: auto;"><source src="${reader.result}" type="${file.type}">Tu navegador no soporta la etiqueta de video.</video>`;
+    reader.addEventListener("load", function () {
+        const mediaType = file.type.split('/')[0];
+        if (mediaType === 'image') {
+            preview.innerHTML = `<img src="${reader.result}" alt="Vista previa" style="max-width: 100%; height: auto;">`;
+        } else if (mediaType === 'video') {
+            preview.innerHTML = `<video controls style="max-width: 100%; height: auto;"><source src="${reader.result}" type="${file.type}">Tu navegador no soporta la etiqueta de video.</video>`;
+        }
+    }, false);
+
+    if (file) {
+        reader.readAsDataURL(file);
     }
-}, false);
-
-if (file) {
-    reader.readAsDataURL(file);
-}
 }
 </script>

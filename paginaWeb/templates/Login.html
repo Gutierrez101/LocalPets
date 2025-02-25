@@ -1,19 +1,17 @@
-{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
     <title>LocalPet</title>
-    <link rel="stylesheet" href="{% static 'paginaweb/Login.css' %}">
+    <link rel="stylesheet" href="/LocalPets/paginaWeb/static/paginaweb/Login.css">
 </head>
 <div class="salir">
-    <button onclick="window.location.href='{% url 'index' %}'">Regresar</button>
-
+    <button onclick="window.location.href='index.html'">Regresar</button>
 </div>
 <body>
     <div class="container">
         <div class="left-side">
             <div class="logo-container">
-                <img src="{% static 'paginaweb/pngegg.png' %}" alt="">
+                <img src="paginaweb/pngegg.png" alt="">
                 <span class="logo-text"><b>LocalPet</b></span>
                 <br><br>
                 
@@ -38,7 +36,7 @@
                 <button type="submit" class="btn">Ingresar</button>
                 <div class="form-group">
                     <br>
-                    <a href="{% url 'new_user' %}">Crear cuenta</a>
+                    <a href="new_user">Crear cuenta</a>
                 </div>
             </form>
         </div>

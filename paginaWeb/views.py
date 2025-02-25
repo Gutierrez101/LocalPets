@@ -1,10 +1,13 @@
 from django.http import HttpResponse
+from django.contrib.auth.hashers import make_password, check_password
 from django.shortcuts import render,redirect
 from django.shortcuts import get_object_or_404
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
 from .forms import tablaPruevaForm, tablaVinculadaForm, MascotaForm
+from .forms import UsuarioForm
+from .models import Usuario
 from .models import tablaPrueva
 from .models import Mascota
 
