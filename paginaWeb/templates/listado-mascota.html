@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscar</title>
+</head>
+<body>
+    <header>
+        <div class="container-start">
+            <div class="container-start-combo1">
+                <div class="container-start-logo"><img src="/perro.png" alt="Logo"></div>
+                <div class="container-start-title"><h1>LOCALPET</h1></div>
+            </div>
+            <div class="container-start-combo2">  
+                <div class="container-start-buttons">
+                    <button class="container-start-buttons-login" onclick="window.location.href='login.html'">Inicio</button>
+                    <button class="container-start-buttons-help" onclick="window.location.href='login.html'">Ayuda</button>
+                </div>
+                <div class="container-start-logo2"><img src="/huella.png" alt="Huella"></div>
+            </div>  
+        </div>
+    </header>
+</body>
+
+<main> 
+    <div class="container-mascota">
+        <div class="container-mascota-listado1">
+            <div class="mascota-imagen">
+                <img src="/img/mascota1.png" alt="Mascota 1">
+            </div>
+            <div class="mascota-info">
+                <div class="info-row">
+                    <div class="info-item"><p>Raza:</p></div>
+                    <div class="info-background"><p>Labrador</p></div>
+                </div>
+                <div class="info-row">
+                    <div class="info-item"><p>Color:</p></div>
+                    <div class="info-background"><p>Negro</p></div>
+                </div>
+                <div class="info-row">
+                    <div class="info-item"><p>Género:</p></div>
+                    <div class="info-background"><p>Macho</p></div>
+                </div>
+                <div class="info-row">
+                    <div class="info-item"><p>Tamaño:</p></div>
+                    <div class="info-background"><p>Grande</p></div>
+                </div>
+                <div class="info-row">
+                    <div class="info-item"><p>Ubicación:</p></div>
+                    <div class="info-background"><p>Ciudad</p></div>
+                </div>
+                <div class="info-row">
+                    <div class="info-item"><p>Fecha:</p></div>
+                    <div class="info-background"><p>01/01/2023</p></div>
+                </div>
+                <div class="info-row">
+                    <div class="info-item"><p>Información del contacto:</p></div>
+                    <div class="info-background"><p>123456789</p></div>
+                </div>
+            </div>
+        </div>
+        <div class="container-mascota-listado2">
+            <div class="mascota-imagen">
+                <img src="/img/mascota2.png" alt="Mascota 2">
+            </div>
+            <div class="mascota-info">
+                <div class="info-row">
+                    <div class="info-item"><p>Raza:</p></div>
+                    <div class="info-background"><p>Beagle</p></div>
+                </div>
+                <div class="info-row">
+                    <div class="info-item"><p>Color:</p></div>
+                    <div class="info-background"><p>Marrón</p></div>
+                </div>
+                <div class="info-row">
+                    <div class="info-item"><p>Género:</p></div>
+                    <div class="info-background"><p>Hembra</p></div>
+                </div>
+                <div class="info-row">
+                    <div class="info-item"><p>Tamaño:</p></div>
+                    <div class="info-background"><p>Mediano</p></div>
+                </div>
+                <div class="info-row">
+                    <div class="info-item"><p>Ubicación:</p></div>
+                    <div class="info-background"><p>Ciudad</p></div>
+                </div>
+                <div class="info-row">
+                    <div class="info-item"><p>Fecha:</p></div>
+                    <div class="info-background"><p>02/02/2023</p></div>
+                </div>
+                <div class="info-row">
+                    <div class="info-item"><p>Información del contacto:</p></div>
+                    <div class="info-background"><p>987654321</p></div>
+                </div>
+            </div>
+        </div>
+        <button class="guardar-reporte">Guardar Reporte</button>
+    </div>
+</main>
+</html>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background-color: #e2caa5;
+}
+
+.container-start {
+    background-color: #8b5b2b;
+    border-radius: 15px;
+    display: flex;
+    justify-content: space-between;
+    padding: 0px 0px 0px 15px;
+}
+
+/*Esto modifica el combo1*/
+.container-start-combo1 {
+    display: flex;
+    align-items: center;
+}
+
+.container-start-title {
+    color: white;
+    font-size: 25px;
+    font-weight: bold;
+    margin-left: 25px;
+}
+
+.container-start-logo img {
+    width: 130px;
+    height: 100px;
+}
+
+h1 {
+    margin: 0;
+    font-size: 55px;
+    font-weight: bolder;
+}
+
+/*Esto modifica el combo2*/
+.container-start-combo2 {
+    display: flex;
+}
+
+.container-start-buttons {
+    display: flex;
+    align-items: flex-end;
+    margin-bottom: 15px;
+    margin-right: 25px;
+    gap: 10px;
+}
+
+.container-start-buttons button {
+    background-color: transparent;
+    color: white;
+    font-weight: bolder;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.container-start-buttons button:hover {
+    text-decoration: underline;
+}
+
+.container-start-logo2 {
+    align-items: center;
+    margin-bottom: 15px;
+    align-self: flex-end;
+    margin-right: 15px;
+}
+
+.container-start-logo2 img {
+    width: 70px;
+    height: 70px;
+}
+
+/*Esto modifica el main*/
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 50px;
+    background-color: #fff;
+    margin: 60px;
+    border-radius: 25px;
+}
+
+.container-mascota {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 1350px;
+}
+
+.container-mascota-listado1, .container-mascota-listado2 {
+    display: flex;
+    background-color: #fff7e6;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.mascota-imagen img {
+    width: 200px;
+    height: auto;
+    object-fit: cover;
+    margin: 15px;
+    margin-left: 40px;
+}
+
+.mascota-info {
+    padding: 15px;
+    padding-left: 50px;
+    display: flex;
+    overflow: hidden;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.mascota-info p {
+    margin: 5px 0;
+    width: 200px; /* Ajusta el ancho según sea necesario */
+}
+
+.info-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.info-item {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.info-background {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 5px 10px;
+    display: flex;
+    justify-content: space-between;
+    width: 400px;
+}
+
+.guardar-reporte {
+    background-color: #8b5b2b;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    align-self: center;
+}
+
+.guardar-reporte:hover {
+    background-color: #6e451f;
+}
+</style>
