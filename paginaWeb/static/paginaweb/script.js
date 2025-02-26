@@ -1,6 +1,6 @@
 // script.js
 function ingresar() {
-    alert('Redirigiendo a la página de inicio de sesión...');
+    alert('Redirigiendo a la página de busqueda de mascotas...');
     window.location.href = '/buscar_mascota_perdida/';
 }
 
