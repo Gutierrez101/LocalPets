@@ -1,5 +1,4 @@
 {% load static %}
-<!--falta el php-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,7 +11,7 @@
     <header>
         <div class="container-start">
             <div class="container-start-combo1">
-                <div class="container-start-logo"><img src="{% static 'paginaweb/perro.png' %}" alt="Logo"></div><!--Forma de enlace de django-->
+                <div class="container-start-logo"><img src="{% static '/paginaweb/perro.png' %}" alt="Logo"></div>
                 <div class="container-start-title"><h1>LOCALPET</h1></div>
             </div>
             <div class="container-start-combo2">  
@@ -20,39 +19,67 @@
                     <button class="container-start-buttons-login" onclick="window.location.href='{% url 'index' %}'">Inicio</button>
                     <button class="container-start-buttons-help" onclick="window.location.href='{% url 'index' %}'">Ayuda</button>
                 </div>
-                <div class="container-start-logo2"><img src="{% static 'paginaweb/huella.png' %}" alt="Huella"></div><!--Forma d eenlace de django-->
+                <div class="container-start-logo2"><img src="{% static '/paginaweb/huella.png' %}" alt="Huella"></div>
             </div>  
         </div>
     </header>
-    <main>
-        <div class="container-form">
-            <form action="/MIO/registro-mascota-perdida.php" method="POST" enctype="multipart/form-data">
-                <label for="tipo-raza">Raza:</label>
-                <select name="tipo-raza" id="tipo-raza" required>
-                    <option value="" disabled selected></option>
-                    <option value="perro">Perro</option>
-                    <option value="gato">Gato</option>
-                    <option value="otro">Otro</option>
-                </select>
-                <label for="color">Color:</label>
-                <input type="text" name="color" id="color" placeholder="Escribe el color" required pattern="[A-Za-z\s]+">
-                <label for="genero">Género:</label>
-                <select name="genero" id="genero" required>
-                    <option value="" disabled selected></option>
-                    <option value="macho">Macho</option>
-                    <option value="hembra">Hembra</option>
-                </select>
-                <label for="tamano">Tamaño (cm):</label>
-                <input type="number" name="tamano" id="tamano" placeholder="Escribe el tamaño" required min="1">
-                <label for="ubicacion">Ubicación:</label>
+</body>
+
+<main>
+    <div class="container-form">
+        <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="tipo-raza">Raza:</label>
+        <select name="raza" id="tipo-raza" required>
+            <option value="" disabled selected></option>    
+            <option value="perro">Perro</option>
+            <option value="gato">Gato</option>
+            <option value="conejo">Conejo</option>
+            <option value="hamster">Hamster</option>
+            <option value="ave">Ave</option>
+            <option value="reptil">Reptil</option>
+            <option value="otro">Otro</option>
+        </select>
+        <label for="color">Color:</label>
+        <select name="color" id="color" required>
+            <option value="" disabled selected></option>
+            <option value="negro">Negro</option>
+            <option value="blanco">Blanco</option>
+            <option value="marrón">Marrón</option>
+            <option value="gris">Gris</option>
+            <option value="naranja">Naranja</option>
+            <option value="amarillo">Amarillo</option>
+            <option value="rojo">Rojo</option>
+            <option value="azul">Azul</option>
+            <option value="verde">Verde</option>
+            <option value="rosa">Rosa</option>
+            <option value="morado">Morado</option>
+            <option value="dorado">Dorado</option>
+            <option value="plateado">Plateado</option>
+            <option value="multicolor">Multicolor</option>
+        </select>
+        <label for="genero">Género:</label>
+        <select name="genero" id="genero" required>
+            <option value="" disabled selected></option>
+            <option value="macho">Macho</option>
+            <option value="hembra">Hembra</option>
+        </select>
+        <label for="tamano">Tamaño:</label>
+        <select name="tamano" id="tamano" required>
+            <option value="" disabled selected></option>
+            <option value="pequeno">Pequeño</option>
+            <option value="mediano">Mediano</option>
+            <option value="grande">Grande</option>
+        </select>
+        <label for="ubicacion">Ubicación:</label>
                     <label for="latitud">Latitud:</label>
-                    <input type="text" name="latitud" id="latitud" placeholder="Latitud" required readonly>
+                    <input type="text" name="latitud" id="latitud" placeholder="Latitud"  readonly>
                     <label for="longitud">Longitud:</label>
-                    <input type="text" name="longitud" id="longitud" placeholder="Longitud" required readonly>
-                <div id="map" style="z-index: 1000; position: relative; height: 500px; width: 100%;"></div>
+                    <input type="text" name="longitud" id="longitud" placeholder="Longitud"  readonly>
+                <div id="map" style="z-index: 1000; position: relative; height: 500px; width: 100%; max-width: 700px;"></div>
                 <script>
 function iniciarMap() {
-            let defaultLocation = { lat: 19.432608, lng: -99.133209 }; // 📍 Ubicación predeterminada (Ciudad de México)
+            let defaultLocation = { lat: -0.180653, lng: -78.467834 }; // 📍 Ubicación predeterminada (Quito, Ecuador)
 
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(
@@ -86,9 +113,7 @@ function iniciarMap() {
                 draggable: true
             });
 
-            // Mostrar las coordenadas en los campos del formulario
-            document.getElementById('latitud').value = coordenadas.lat;
-            document.getElementById('longitud').value = coordenadas.lng;
+            
 
             // Actualizar coordenadas si se mueve el marcador
             google.maps.event.addListener(marker, 'dragend', function (event) {
@@ -98,7 +123,7 @@ function iniciarMap() {
         }
                 </script>
                 <label for="fecha">Fecha que fue encontrado:</label>
-                <input type="date" name="fecha" id="fecha" required>
+                <input type="date" name="fecha-inicio" id="fecha-inicio" required>
                 <label for="media">Subir Foto:</label>
                 <input type="file" name="media" id="media" accept="image/*" required onchange="previewFile()">
                 <div id="preview"></div>
@@ -106,183 +131,288 @@ function iniciarMap() {
                 <textarea name="descripcion" id="descripcion" cols="30" rows="10" placeholder="Escribe la descripción" required></textarea>
                 <label for="contacto">Información de Contacto:</label>
                 <input type="text" name="contacto" id="contacto" placeholder="Escribe la información de contacto" required>
-                <button type="submit" onclick="guardarReporte()">Guardar Reporte</button>
+                <button type="submit" >Guardar Reporte</button>
             </form>
         </div>
     </main>
 </body>
 </html>
 
-<style>
-#map {
-    height: 500px;
-    width: 500px;
-}
-
-body {
-    font-family: Arial, sans-serif;
-    background-color: #e2caa5;
-}
-.container-start {
-    background-color: #8b5b2b;
-    border-radius: 15px;
-    display: flex;
-    justify-content: space-between;
-    padding: 0px 0px 0px 15px;
-}
-
-/*Esto modifica el combo1*/
-.container-start-combo1 {
-    display: flex;
-    align-items: center;
-}
-
-.container-start-title {
-    color: white;
-    font-size: 25px;
-    font-weight: bold;
-    margin-left: 25px;
-}
-
-.container-start-logo img {
-    width: 130px;
-    height: 100px;
-}
-
-h1 {
-    margin: 0;
-    font-size: 55px;
-    font-weight:bolder;
-}
-
-/*Esto modifica el combo2*/
-.container-start-combo2{
-    display: flex;
-}
-
-.container-start-buttons{
-    display: flex;
-    align-items: flex-end;
-    margin-bottom: 15px;
-    margin-right: 25px;
-    gap: 10px;
-}
-
-.container-start-buttons button {
-    background-color: transparent;
-    color: white;
-    font-weight: bolder;
-    border: none;
-    cursor: pointer;
-    font-size: 15px;
-}
-
-.container-start-buttons button:hover {
-    text-decoration: underline;
-}
-
-.container-start-logo2 {
-    align-items: center;
-    margin-bottom: 15px;
-    align-self: flex-end;
-    margin-right: 15px;
-}
-.container-start-logo2 img {
-    width: 70px;
-    height: 70px;
-}
-
-/*Esto modifica el main*/
-main {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin-top: 200px; 
-}
-
-form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-form h1 {
-    text-align: center;
-}
-
-form label {
-    font-weight: bold;
-}
-
-form input, form select, form textarea, form button {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    width: 600px;
-}
-
-form select {
-    width: 622px;
-}
-
-form button {
-    background-color: #8b5b2b;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-form button {
-    width: 200px;
-    text-align: center;
-    align-self: center;
-    margin-top: 30px;
-    margin-bottom: 60px;
-}
-form button:hover {
-    background-color: #6e451f;
-}
-
-#preview {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 500px;
-    height: 420px; /* Fija la altura del contenedor de vista previa */
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin-top: 15px;
-    overflow: hidden; /* Asegúrate de que el contenido no desborde */
-}
-
-#preview img {
-    max-width: 100%;
-    height: auto;
-}
-
-.container-form {
-    margin-top: 1000px;
-}
-</style>
-
 <script>
-function previewFile() {
-    const preview = document.getElementById('preview');
-    const file = document.getElementById('media').files[0];
-    const reader = new FileReader();
+document.addEventListener('DOMContentLoaded', function() {
+    const inputs = [
+        { id: 'tipo-raza', message: 'Seleccione una raza.' },
+        { id: 'color', message: 'Seleccione un color.' },
+        { id: 'genero', message: 'Seleccione un género.' },
+        { id: 'tamano', message: 'Seleccione un tamaño.' },
+        { id: 'fecha-inicio', message: 'Ingrese el mes y año de inicio.' },
+        { id: 'fecha-fin', message: 'Ingrese el mes y año de fin.' },
+        { id: 'media', message: 'Suba una foto.' },
+        { id: 'descripcion', message: 'Escriba una descripción.' },
+        { id: 'contacto', message: 'Escriba la información de contacto.' }
+    ];
 
-    reader.addEventListener("load", function () {
-        const mediaType = file.type.split('/')[0];
-        if (mediaType === 'image') {
-            preview.innerHTML = `<img src="${reader.result}" alt="Vista previa" style="max-width: 100%; height: auto;">`;
-        } else if (mediaType === 'video') {
-            preview.innerHTML = `<video controls style="max-width: 100%; height: auto;"><source src="${reader.result}" type="${file.type}">Tu navegador no soporta la etiqueta de video.</video>`;
+    inputs.forEach(input => {
+        const element = document.getElementById(input.id);
+        element.addEventListener('input', function(event) {
+            event.target.setCustomValidity('');
+        });
+        element.addEventListener('invalid', function(event) {
+            if (event.target.validity.valueMissing) {
+                event.target.setCustomValidity(input.message);
+            } else {
+                event.target.setCustomValidity('');
+            }
+        });
+    });
+});
+    
+    function previewFile() {
+        const preview = document.getElementById('preview');
+        const file = document.getElementById('media').files[0];
+        const reader = new FileReader();
+    
+        reader.addEventListener("load", function () {
+            const mediaType = file.type.split('/')[0];
+            if (mediaType === 'image') {
+                preview.innerHTML = `<img src="${reader.result}" alt="Vista previa" class="preview-image">`;
+            } else if (mediaType === 'video') {
+                preview.innerHTML = `<video controls class="preview-video"><source src="${reader.result}" type="${file.type}">Tu navegador no soporta la etiqueta de video.</video>`;
+            }
+        }, false);
+    
+        if (file) {
+            reader.readAsDataURL(file);
         }
-    }, false);
-
-    if (file) {
-        reader.readAsDataURL(file);
     }
-}
-</script>
+    </script>
+    
+    <style>
+    #map {
+        height: 500px;
+        width: 100%;
+    }
+    
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #e2caa5;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    .container-start {
+        background-color: #8b5b2b;
+        border-radius: 15px;
+        display: flex;
+        justify-content: space-between;
+        padding: 0px 0px 0px 15px;
+        flex-wrap: wrap;
+    }
+    
+    /*Esto modifica el combo1*/
+    .container-start-combo1 {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+    
+    .container-start-title {
+        color: white;
+        font-size: 25px;
+        font-weight: bold;
+        margin-left: 25px;
+    }
+    
+    .container-start-logo img {
+        width: 130px;
+        height: 100px;
+    }
+    
+    .container-form {
+        width: 100%;
+        max-width: 800px;
+        margin: 0 auto; /* Centra el contenedor */
+        padding: 20px;
+        box-sizing: border-box;
+    }
+    
+    h1 {
+        margin: 0;
+        font-size: 55px;
+        font-weight: bolder;
+    }
+    
+    /*Esto modifica el combo2*/
+    .container-start-combo2 {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    
+    .container-start-buttons {
+        display: flex;
+        align-items: flex-end;
+        margin-bottom: 15px;
+        margin-right: 25px;
+        gap: 10px;
+    }
+    
+    .container-start-buttons button {
+        background-color: transparent;
+        color: white;
+        font-weight: bolder;
+        border: none;
+        cursor: pointer;
+        font-size: 15px;
+    }
+    
+    .container-start-buttons button:hover {
+        text-decoration: underline;
+    }
+    
+    .container-start-logo2 {
+        align-items: center;
+        margin-bottom: 15px;
+        align-self: flex-end;
+        margin-right: 15px;
+    }
+    
+    .container-start-logo2 img {
+        width: 70px;
+        height: 70px;
+    }
+    
+    /*Esto modifica el main*/
+    main {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
+    
+    form {
+        width: 100%;
+        max-width: 800px; /* Aumenta el ancho máximo del formulario */
+    }
+    
+    form label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+    
+    form input, form select, form textarea, form button {
+        width: 100%;
+        max-width: 700px;
+        padding: 10px;
+        align-items: center;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+    
+    form button {
+        background-color: #8b5b2b;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+    }
+    
+    form button:hover {
+        background-color: #6e451f;
+    }
+    
+    .preview-image, .preview-video {
+        max-width: 100%;
+        height: auto;
+        margin-top: 15px;
+    }
+    
+    @media (max-width: 768px) {
+        .container-start {
+            flex-direction: column;
+            align-items: center;
+        }
+    
+        .container-start-combo1, .container-start-combo2 {
+            justify-content: center;
+        }
+    
+        .container-start-title {
+            margin-left: 0;
+            text-align: center;
+        }
+    
+        .container-start-buttons {
+            margin-bottom: 10px;
+            margin-right: 0;
+        }
+    
+        form {
+            width: 100%;
+            padding: 10px;
+        }
+    
+        #map {
+            height: 300px;
+        }
+    }
+    
+    @media (max-width: 820px) and (max-height: 1180px) {
+        h1 {
+            font-size: 30px;
+        }
+    
+        .container-start-logo img {
+            width: 100px;
+            height: 70px;
+        }
+    
+        .container-start-logo2 img {
+            width: 50px;
+            height: 50px;
+        }
+    
+        .container-start-combo1, .container-start-combo2 {
+            justify-content: center;
+            width: 100%;
+        }
+    
+        .container-start {
+            flex-direction: column;
+            align-items: center;
+        }
+    }
+    
+    @media (max-width: 600px) and (max-height: 1000px) {
+        .preview-image, .preview-video {
+            max-width: 100px;
+            height: auto;
+            margin-top: 15px;
+        }
+    
+        h1 {
+            font-size: 30px;
+        }
+    
+        .container-start-logo img {
+            width: 100px;
+            height: 70px;
+        }
+    
+        .container-start-logo2 img {
+            width: 50px;
+            height: 50px;
+        }
+    
+        .container-start-combo1, .container-start-combo2 {
+            justify-content: center;
+            width: 100%;
+        }
+    
+        .container-start {
+            flex-direction: column;
+            align-items: center;
+        }
+    }
+    </style>

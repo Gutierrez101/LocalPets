@@ -1,25 +1,34 @@
-{% load static %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro - LocalPet</title>
-    <link rel="stylesheet" href="{% static 'paginaweb/newUser.css' %}">
-    <link rel="stylesheet" href="{% static 'paginaweb/popup.css' %}">
+    <link rel="stylesheet" href="{% static '/paginaweb/newUser.css' %}">
+    <link rel="stylesheet" href="{% static '/paginaweb/popup.css' %}">
 </head>
 <body>
     <header>
-        <div class="logo"><img src="{% static 'paginaweb/perro busqueda.webp' %}" alt="perro"> LOCALPET </div>
-        <nav>
-            <a href="{% url 'index' %}">Inicio</a>
-            <a href="#">Ayuda</a>
-        </nav>
+        <div class="container-start">
+            <div class="container-start-combo1">
+                <div class="container-start-logo"><img src="{% static '/paginaweb/perro.png' %}" alt="Logo"></div>
+                <div class="container-start-title"><h1>LOCALPET</h1></div>
+            </div>
+            <div class="container-start-combo2">  
+                <div class="container-start-buttons">
+                    <button class="container-start-buttons-login" onclick="window.location.href='{% url 'index' %}'">Inicio</button>
+                    <button class="container-start-buttons-help" onclick="window.location.href='index.html'">Ayuda</button>
+                </div>
+                <div class="container-start-logo2"><img src="{% static '/paginaweb/huella.png' %}" alt="Huella"></div>
+            </div>  
+        </div>
     </header>
     
     <main>
         <h1 class="titulo">Registro Nuevo Usuario</h1>
-        <form class="registro-form" onsubmit="return showModal(event)">
+        <form class="registro-form" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
             <label for="nombre"><b>Nombre:</b></label>
             <input type="text" id="nombre" name="nombre" placeholder="Ingresa tu nombre" required>
             
@@ -60,3 +69,81 @@
     </script>
 </body>
 </html>
+
+<style>
+    body {
+    font-family: Arial, sans-serif;
+    background-color: #e2caa5;
+}
+.container-start {
+    background-color: #8b5b2b;
+    border-radius: 15px;
+    display: flex;
+    justify-content: space-between;
+    padding: 0px 0px 0px 15px;
+}
+
+/*Esto modifica el combo1*/
+.container-start-combo1 {
+    display: flex;
+    align-items: center;
+}
+
+.container-start-title {
+    color: white;
+    font-size: 25px;
+    font-weight: bold;
+    margin-left: 25px;
+}
+
+.container-start-logo img {
+    width: 130px;
+    height: 100px;
+}
+
+
+h1 {
+    margin: 0;
+    font-size: 25px;
+    font-weight:bolder;
+}
+
+/*Esto modifica el combo2*/
+.container-start-combo2{
+    display: flex;
+    justify-content: flex-start;
+    margin-left: 880px;
+}
+
+.container-start-buttons{
+    display: flex;
+    align-items: flex-end;
+    margin-bottom: 15px;
+    margin-right: 25px;
+    gap: 10px;
+}
+.container-start-buttons button {
+    background-color: transparent;
+    color: white;
+    font-weight: bolder;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+
+}
+
+.container-start-buttons button:hover {
+    text-decoration: underline;
+}
+
+.container-start-logo2 {
+    align-items: center;
+    margin-bottom: 15px;
+    align-self: flex-end;
+    margin-right: 15px;
+}
+.container-start-logo2 img {
+    width: 70px;
+    height: 70px;
+}   
+</style>

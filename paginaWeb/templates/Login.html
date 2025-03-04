@@ -1,9 +1,10 @@
-{% load static %}
+
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
     <title>LocalPet</title>
-    <link rel="stylesheet" href="{% static 'paginaweb/Login.css'%}">
+    <link rel="stylesheet" href="{% static '/paginaweb/Login.css' %}">
 </head>
 <div class="salir">
     <button onclick="window.location.href='{% url 'index' %}'">Regresar</button>
@@ -13,7 +14,7 @@
     <div class="container">
         <div class="left-side">
             <div class="logo-container">
-                <img src="{% static 'paginaweb/pngegg.png'%}" alt="">
+                <img src="{% static '/paginaweb/pngegg.png' %}" alt="">
                 <span class="logo-text"><b>LocalPet</b></span>
                 <br><br>
                 
@@ -22,7 +23,8 @@
        
         <div class="right-side">
             <h2>Inicie sesión en su cuenta</h2>
-            <form>
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
                 <div class="form-group">
                     <label for="usuario" >Usuario:</label>
                     <input type="text" id="usuario" name="usuario" placeholder="Ingrese su usuario" required >
@@ -35,7 +37,7 @@
                 <button type="submit" class="btn">Ingresar</button>
                 <div class="form-group">
                     <br>
-                    <a href="{% url 'new_user' %}">Crear cuenta</a>
+                    <a href='{% url 'new_user' %}'>Crear cuenta</a>
                 </div>
             </form>
         </div>

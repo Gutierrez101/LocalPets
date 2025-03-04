@@ -1,37 +1,28 @@
 from django.db import models
 from django.contrib.auth.models import User 
+from geopy.distance import geodesic
+
 # Create your models here.
 
-class tablaPrueva(models.Model):
-    nombre = models.CharField(max_length=50)
-    apellido = models.CharField(max_length=50)
-    edad = models.IntegerField(null=True)
-    
-    imajen = models.ImageField(upload_to="imagenes/", null=True)
-    def __str__(self):
-        return self.nombre
-    
-class tablaVinculada(models.Model):
-    nombre = models.CharField(max_length=50)
-    tablaPrueva = models.ForeignKey(tablaPrueva, on_delete=models.CASCADE)
-    def __str__(self):
-        return self.nombre
+
 #Modelo de mascotas  
 class Mascota(models.Model):
-    id=models.AutoField(primary_key=True)
-    especie=models.CharField(max_length=50)
-    raza=models.CharField(max_length=100,blank=True,null=True)
-    color=models.CharField(max_length=50)
-    tamaño=models.CharField(max_length=50,choices=[('Pequeño','Pequeño'),('Mediano','Mediano'),('Grande','Grande')])
-    descripcion=models.TextField(blank=True,null=True)
-    estado=models.CharField(max_length=50,choices=[('Perdido','Perdido'),('Adoptado','Adoptado'),('Disponible','Disponible')])
-    fotografia=models.ImageField(upload_to='mascotas/',blank=True,null=True)
-    latitud=models.DecimalField(max_digits=9,decimal_places=6,blank=True,null=True)
-    longitud=models.DecimalField(max_digits=9,decimal_places=6,blank=True,null=True)
-    direccion=models.CharField(max_length=255,blank=True,null=True)
-
+    id = models.AutoField(primary_key=True)
+    raza = models.CharField(max_length=100)
+    color = models.CharField(max_length=100)
+    tamaño = models.CharField(max_length=100)
+    descripcion = models.TextField(default='Sin descripcion')
+    estado = models.CharField(max_length=10, default='Perdido')
+    fotografia = models.ImageField(upload_to='mascotas/', blank=True, null=True)
+    latitud = models.FloatField(default=0,blank=True, null=True)
+    longitud = models.FloatField(default=0,blank=True, null=True)
+    direccion = models.CharField(max_length=255, blank=True, null=True)
+    fecha = models.DateField()
+    genero=models.CharField(max_length=10,default='Desconocido')
+    contacto=models.CharField(max_length=100,default='Desconocido')
+    
     def __str__(self):
-        return f"{self.id}: {self.especie} - {self.raza if self.raza else 'Sin raza'} ({self.estado}) - {self.direccion if self.direccion else 'Sin dirección'}"
+        return self.especie
 
     
     def registrarMascota(self):
@@ -69,6 +60,18 @@ class Mascota(models.Model):
         self.direccion=nueva_direccion
         self.save()
         return f"Ubicacion actualizada a: {self.direccion}"
+    
+    def dentroDeRango(self,latitud,longitud):
+        #calcula la distancia entre la ubicacion de la mascota y las cordenadas dadas, saviendo que son coordenadas geograficas y devuelve  true su estan dentro de un rango definido por la variable rango
+        rango=1
+        cordenada1=(self.latitud,self.longitud)
+        cordenada2=(latitud,longitud)
+        distancia=geodesic(cordenada1,cordenada2).kilometers    
+        return distancia<=rango
+    
+   
+    
+    
 
 
 
